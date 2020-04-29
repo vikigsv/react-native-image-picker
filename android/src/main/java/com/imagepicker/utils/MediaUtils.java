@@ -47,7 +47,7 @@ public class MediaUtils
 
         if (ReadableMapUtils.hasAndNotEmptyString(options, "imageFileType")) {
             final String imageFileType = options.getString("imageFileType");
-            if (imageFileType == "png") {
+            if (imageFileType.equals("png")) {
                 filename = new StringBuilder("image-")
                         .append(UUID.randomUUID().toString())
                         .append(".png")
@@ -188,7 +188,7 @@ public class MediaUtils
 
         if (ReadableMapUtils.hasAndNotEmptyString(options, "imageFileType")) {
             final String imageFileType = options.getString("imageFileType");
-            if (imageFileType == "png") {
+            if (imageFileType.equals("png")) {
                 scaledPhoto.compress(Bitmap.CompressFormat.PNG, result.quality, bytes);
             } else {
                 scaledPhoto.compress(Bitmap.CompressFormat.JPEG, result.quality, bytes);
