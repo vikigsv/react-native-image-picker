@@ -45,7 +45,7 @@ public class MediaUtils
                 .append(".jpg")
                 .toString();
 
-        if (ReadableMapUtils.hasAndNotNullReadableMap(options, "imageFileType")) {
+        if (ReadableMapUtils.hasAndNotEmptyString(options, "imageFileType")) {
             final String imageFileType = options.getString("imageFileType");
             if (imageFileType == "png") {
                 filename = new StringBuilder("image-")
@@ -186,7 +186,7 @@ public class MediaUtils
         scaledPhoto = Bitmap.createBitmap(photo, 0, 0, photo.getWidth(), photo.getHeight(), matrix, true);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
-        if (ReadableMapUtils.hasAndNotNullReadableMap(options, "imageFileType")) {
+        if (ReadableMapUtils.hasAndNotEmptyString(options, "imageFileType")) {
             final String imageFileType = options.getString("imageFileType");
             if (imageFileType == "png") {
                 scaledPhoto.compress(Bitmap.CompressFormat.PNG, result.quality, bytes);
