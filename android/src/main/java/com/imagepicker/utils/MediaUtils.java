@@ -47,7 +47,7 @@ public class MediaUtils
 
         if (ReadableMapUtils.hasAndNotNullReadableMap(options, "imageFileType")) {
             final String imageFileType = options.getString("imageFileType");
-            if (imageFileType == "") {
+            if (imageFileType == "png") {
                 filename = new StringBuilder("image-")
                         .append(UUID.randomUUID().toString())
                         .append(".png")
@@ -185,7 +185,7 @@ public class MediaUtils
 
         scaledPhoto = Bitmap.createBitmap(photo, 0, 0, photo.getWidth(), photo.getHeight(), matrix, true);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        
+
         if (ReadableMapUtils.hasAndNotNullReadableMap(options, "imageFileType")) {
             final String imageFileType = options.getString("imageFileType");
             if (imageFileType == "png") {
