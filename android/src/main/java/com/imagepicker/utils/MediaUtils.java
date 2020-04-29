@@ -40,10 +40,20 @@ public class MediaUtils
                                                @NonNull final ReadableMap options,
                                                @NonNull final boolean forceLocal)
     {
-        final String filename = new StringBuilder("image-")
+        String filename = new StringBuilder("image-")
                 .append(UUID.randomUUID().toString())
                 .append(".jpg")
                 .toString();
+
+        if (ReadableMapUtils.hasAndNotNullReadableMap(options, "imageFileType")) {
+            final String imageFileType = options.getString("imageFileType");
+            if (imageFileType == "") {
+                filename = new StringBuilder("image-")
+                        .append(UUID.randomUUID().toString())
+                        .append(".png")
+                        .toString();
+            }
+        }
 
         // defaults to Public Pictures Directory
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -175,7 +185,17 @@ public class MediaUtils
 
         scaledPhoto = Bitmap.createBitmap(photo, 0, 0, photo.getWidth(), photo.getHeight(), matrix, true);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        scaledPhoto.compress(Bitmap.CompressFormat.JPEG, result.quality, bytes);
+        
+        if (ReadableMapUtils.hasAndNotNullReadableMap(options, "imageFileType")) {
+            final String imageFileType = options.getString("imageFileType");
+            if (imageFileType == "png") {
+                scaledPhoto.compress(Bitmap.CompressFormat.PNG, result.quality, bytes);
+            } else {
+                scaledPhoto.compress(Bitmap.CompressFormat.JPEG, result.quality, bytes);
+            }
+        } else {
+            scaledPhoto.compress(Bitmap.CompressFormat.JPEG, result.quality, bytes);
+        }
 
         final boolean forceLocal = requestCode == REQUEST_LAUNCH_IMAGE_CAPTURE;
         final File resized = createNewFile(context, options, !forceLocal);
